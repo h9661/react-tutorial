@@ -11,17 +11,28 @@ function Square(props: any) {
   );
 }
 
-class Board extends React.Component<{}, { squares: any[] }> {
+class Board extends React.Component<{}, { squares: any[]; turn: number }> {
   constructor(props: any) {
     super(props);
     this.state = {
+      turn: 0,
       squares: Array(9).fill(null),
     };
   }
 
   handleClick(i: number) {
     const squares = this.state.squares.slice();
-    squares[i] = "X";
+
+    if (squares[i] === null) {
+      if (this.state.turn % 2 === 0) {
+        squares[i] = "X";
+      } else {
+        squares[i] = "O";
+      }
+
+      this.setState({ turn: this.state.turn + 1 });
+    }
+
     this.setState({ squares: squares });
   }
 
@@ -30,7 +41,7 @@ class Board extends React.Component<{}, { squares: any[] }> {
   }
 
   render() {
-    const status = "Next player: X";
+    const status = `Next player: ${this.state.turn % 2 === 0 ? "X" : "O"}`;
 
     return (
       <div>
