@@ -3,41 +3,81 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
-interface SquareProps {
-  value: number;
+function Square(props: any) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
 }
 
-class Square extends React.Component<SquareProps, { clicked: string }> {
-  constructor(props: SquareProps) {
+class Board extends React.Component<{}, { squares: any[]; turn: number }> {
+  constructor(props: any) {
     super(props);
     this.state = {
-      clicked: "O",
+      turn: 0,
+      squares: Array(9).fill(null),
     };
   }
 
-  render() {
-    return (
-      <button
-        className="square"
-        onClick={() => {
-          if (this.state.clicked === "O") {
-            this.setState({ clicked: "X" });
-          }
-        }}
-      >
-        {this.state.clicked}
-      </button>
-    );
-  }
-}
+  handleClick(i: number) {
+    const squares = this.state.squares.slice();
 
-class Board extends React.Component {
+    if (squares[i] === null) {
+      if (this.state.turn % 2 === 0) {
+        squares[i] = "X";
+      } else {
+        squares[i] = "O";
+      }
+
+      this.setState({ turn: this.state.turn + 1 });
+    }
+
+    this.setState({ squares: squares });
+  }
+
+  calculateWinner(squares: any[]) {
+    const lines = [
+      // Horizontal
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+
+      // Vertical
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+
+      // Diagonal
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (const [a, b, c] of lines) {
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+
+    return false;
+  }
+
   renderSquare(i: number) {
-    return <Square value={i} />;
+    return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
   }
 
   render() {
-    const status = "Next player: X";
+    let status = `Next player: ${this.state.turn % 2 === 0 ? "X" : "O"}`;
+    let winner = this.calculateWinner(this.state.squares);
+    if (winner) {
+      status = `Winner: ${winner}`;
+
+      return (
+        <div>
+          <div className="status">{status}</div>
+        </div>
+      );
+    }
 
     return (
       <div>
