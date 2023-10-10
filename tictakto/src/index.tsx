@@ -3,37 +3,37 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
-interface SquareProps {
-  value: number;
-}
-
-class Square extends React.Component<SquareProps, { clicked: string }> {
-  constructor(props: SquareProps) {
-    super(props);
-    this.state = {
-      clicked: "O",
-    };
-  }
-
+class Square extends React.Component<{ value: any; onClick: Function }, { value: string }> {
   render() {
     return (
       <button
         className="square"
         onClick={() => {
-          if (this.state.clicked === "O") {
-            this.setState({ clicked: "X" });
-          }
+          this.props.onClick();
         }}
       >
-        {this.state.clicked}
+        {this.props.value}
       </button>
     );
   }
 }
 
-class Board extends React.Component {
+class Board extends React.Component<{}, { squares: any[] }> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    };
+  }
+
+  handleClick(i: number) {
+    const squares = this.state.squares.slice();
+    squares[i] = "X";
+    this.setState({ squares: squares });
+  }
+
   renderSquare(i: number) {
-    return <Square value={i} />;
+    return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
   }
 
   render() {
