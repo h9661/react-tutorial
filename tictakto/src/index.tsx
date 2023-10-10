@@ -36,12 +36,48 @@ class Board extends React.Component<{}, { squares: any[]; turn: number }> {
     this.setState({ squares: squares });
   }
 
+  calculateWinner(squares: any[]) {
+    const lines = [
+      // Horizontal
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+
+      // Vertical
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+
+      // Diagonal
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (const [a, b, c] of lines) {
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+
+    return false;
+  }
+
   renderSquare(i: number) {
     return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
   }
 
   render() {
-    const status = `Next player: ${this.state.turn % 2 === 0 ? "X" : "O"}`;
+    let status = `Next player: ${this.state.turn % 2 === 0 ? "X" : "O"}`;
+    let winner = this.calculateWinner(this.state.squares);
+    if (winner) {
+      status = `Winner: ${winner}`;
+
+      return (
+        <div>
+          <div className="status">{status}</div>
+        </div>
+      );
+    }
 
     return (
       <div>
