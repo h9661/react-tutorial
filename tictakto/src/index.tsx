@@ -80,9 +80,26 @@ function Game(props: any) {
     setTurn(turn + 1);
   };
 
+  const jumpTo = (move: number) => {};
+
   const render = () => {
     const current = history[history.length - 1];
     const winner = calculateWinner(current.squares);
+
+    const moves = history.map((step, move) => {
+      const desc = move ? `Go to move #${move}` : `Go to game start`;
+      return (
+        <li key={move}>
+          <button
+            onClick={() => {
+              jumpTo(move);
+            }}
+          >
+            {desc}
+          </button>
+        </li>
+      );
+    });
 
     let status;
     if (winner) {
@@ -98,7 +115,7 @@ function Game(props: any) {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{/* TODO */}</ol>
+          <ol>{moves}</ol>
         </div>
       </div>
     );
