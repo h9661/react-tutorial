@@ -80,10 +80,13 @@ function Game(props: any) {
     setTurn(turn + 1);
   };
 
-  const jumpTo = (move: number) => {};
+  const jumpTo = (move: number) => {
+    setTurn(move);
+    setHistory(history.slice(0, move + 1));
+  };
 
   const render = () => {
-    const current = history[history.length - 1];
+    const current = history[turn];
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
@@ -105,7 +108,7 @@ function Game(props: any) {
     if (winner) {
       status = `Winner: ${winner}`;
     } else {
-      status = `Next player: ${props.turn % 2 === 0 ? "X" : "O"}`;
+      status = `Next player: ${turn % 2 === 0 ? "X" : "O"}`;
     }
 
     return (
