@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-function User({ user }: { user: { name: string; age: number; id: number } }) {
+function User({ user }) {
   const render = () => {
     return (
       <div>
@@ -39,3 +39,5 @@ function UserList() {
 
   return render();
 }
+
+export default UserList;

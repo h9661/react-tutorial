@@ -3,7 +3,7 @@ import react from "react";
 function InputSample() {
   const [text, setText] = react.useState("");
 
-  const onChange = (e: any) => {
+  const onChange = (e) => {
     setText(e.target.value);
   };
 

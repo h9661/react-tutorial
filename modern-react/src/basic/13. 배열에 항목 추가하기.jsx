@@ -1,11 +1,6 @@
 import React, { useRef } from "react";
 
-function CreateUser(props: {
-  username: string;
-  email: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onCreate: () => void;
-}): React.ReactNode {
+function CreateUser(props) {
   const { username, email, onChange, onCreate } = props;
 
   const render = () => {
@@ -27,7 +22,7 @@ function App() {
     email: "",
   });
   const { username, email } = inputs;
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e) => {
     const { name, value } = e.target;
     setInputs({
       ...inputs,

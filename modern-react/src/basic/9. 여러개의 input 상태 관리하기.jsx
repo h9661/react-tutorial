@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 function InputsSample() {
   const [inputs, setInputs] = React.useState({
@@ -8,7 +8,10 @@ function InputsSample() {
 
   const { name, nickname } = inputs;
 
-  const onChange = (e: any) => {
+  const nameInput = useRef();
+  const nicknameInput = useRef();
+
+  const onChange = (e) => {
     const { name, value } = e.target;
     setInputs({
       ...inputs, // copy all the existing values
@@ -20,13 +23,15 @@ function InputsSample() {
       name: "",
       nickname: "",
     });
+    nameInput.current.value = "";
+    nicknameInput.current.value = "";
   };
 
   const render = () => {
     return (
       <div>
-        <input name="name" onChange={onChange} type="text" placeholder="name" />
-        <input name="nickname" onChange={onChange} type="text" placeholder="nickname" />
+        <input name="name" onChange={onChange} type="text" placeholder="name" ref={nameInput} />
+        <input name="nickname" onChange={onChange} type="text" placeholder="nickname" ref={nicknameInput} />
         <button onClick={onReset}>reset</button>
         <div>
           <b>value: </b>

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-function User({ username, email, id, onRemove }: any) {
+function User({ username, email, id, onRemove }) {
   return (
     <div>
       <b>{username}</b> <span>({email})</span>
@@ -9,12 +9,7 @@ function User({ username, email, id, onRemove }: any) {
   );
 }
 
-function CreateUser(props: {
-  username: string;
-  email: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onCreate: () => void;
-}): React.ReactNode {
+function CreateUser(props) {
   const { username, email, onChange, onCreate } = props;
 
   const render = () => {
@@ -36,7 +31,7 @@ function App() {
     email: "",
   });
   const { username, email } = inputs;
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e) => {
     const { name, value } = e.target;
     setInputs({
       ...inputs,
@@ -44,7 +39,7 @@ function App() {
     });
   };
 
-  const onRemove = (id: number) => {
+  const onRemove = (id) => {
     setUsers(users.filter((user) => user.id !== id));
 
     console.log(id);

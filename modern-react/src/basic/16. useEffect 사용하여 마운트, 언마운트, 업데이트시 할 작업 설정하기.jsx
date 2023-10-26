@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-function User({ username, email, id, onRemove, onClick, active }: any) {
+function User({ username, email, id, onRemove, onClick, active }) {
   // useEffect(() => {
   //   // 마운트 될 때
   //   console.log("컴포넌트가 화면에 나타남");
@@ -46,12 +46,7 @@ function User({ username, email, id, onRemove, onClick, active }: any) {
   return render();
 }
 
-function CreateUser(props: {
-  username: string;
-  email: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onCreate: () => void;
-}): React.ReactNode {
+function CreateUser(props) {
   const { username, email, onChange, onCreate } = props;
 
   const render = () => {
@@ -73,7 +68,7 @@ function App() {
     email: "",
   });
   const { username, email } = inputs;
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e) => {
     const { name, value } = e.target;
     setInputs({
       ...inputs,
@@ -81,13 +76,13 @@ function App() {
     });
   };
 
-  const onRemove = (id: number) => {
+  const onRemove = (id) => {
     setUsers(users.filter((user) => user.id !== id));
 
     console.log(id);
   };
 
-  const onClick = (id: number) => {
+  const onClick = (id) => {
     setUsers(
       users.map((user) => {
         if (user.id === id) {

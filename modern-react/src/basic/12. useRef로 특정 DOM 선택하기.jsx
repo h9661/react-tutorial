@@ -8,9 +8,9 @@ function UseRef() {
 
   const { name, nickname } = inputs;
 
-  const nameInput = useRef<HTMLInputElement>(null);
+  const nameInput = useRef(null);
 
-  const onChange = (e: any) => {
+  const onChange = (e) => {
     const { name, value } = e.target;
     setInputs({
       ...inputs, // copy all the existing values
@@ -42,3 +42,5 @@ function UseRef() {
     );
   };
 }
+
+export default UseRef;

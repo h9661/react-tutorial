@@ -1,6 +1,6 @@
 import React from "react";
 
-function User({ user }: { user: { name: string; age: number } }) {
+function User({ user }) {
   const render = () => {
     return (
       <div>
@@ -31,3 +31,5 @@ function UserList() {
 
   return render();
 }
+
+export default UserList;
